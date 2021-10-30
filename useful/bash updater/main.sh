@@ -1,6 +1,8 @@
 md5local=$(md5sum main.sh | cut -d ' ' -f 1)
 md5localcheck=$(md5sum main.sh | cut -d ' ' -f 1)
 rm md5server.sh
+#example
+#curl https://raw.githubusercontent.com/Revivalr/random-scripts/main/useful/bash%20updater/main.sh --output main.sh
 curl (ENTER RAW VERSION OF SCRIPT HERE) --output (output).sh
 md5server=md5sum | cut -d ' ' -f 1
 rm md5servercheck.sh
@@ -54,6 +56,7 @@ Redownloading the script.
       echo
     else
       errorblank='There was a problem with the md5 checksum generated to tell ig there was an update.'
+      functionpass=md5update
       error
     echo
     echo 'Generating md5 checksum for the script on Bitbucket.'
@@ -70,13 +73,15 @@ Redownloading the script.
       echo
     else
       errorblank='The checksum for the Bitbucket script has not been verified.'
+      functionpass=md5update
       error
     fi
+    updatescript() {
     echo 'Downloading update script'
    #example
-   #Add when I upload
-    curl (ENTER RAW UPDATE SCRIPT LINK HERE) --output (OUTPUT).sh
-    curl (ENTER RAW UPDATE SCRIPT LINK HERE) --output (OUTPUT).sh
+   #curl https://raw.githubusercontent.com/Revivalr/random-scripts/main/useful/bash%20updater/scriptupdater.sh --output updatescript.sh
+   #curl https://raw.githubusercontent.com/Revivalr/random-scripts/main/useful/bash%20updater/scriptupdater.sh --output updatescript1.sh
+   #curl https://raw.githubusercontent.com/Revivalr/random-scripts/main/useful/bash%20updater/scriptupdater.sh --output updatescript2.sh
     curl (ENTER RAW UPDATE SCRIPT LINK HERE) --output (OUTPUT).sh
     curl (ENTER RAW UPDATE SCRIPT LINK HERE) --output (OUTPUT).sh
     curl (ENTER RAW UPDATE SCRIPT LINK HERE) --output (OUTPUT).sh
@@ -84,10 +89,24 @@ Redownloading the script.
     md5update1=$(md5sum updatescript.sh | cut -d ' ' -f 1)
     md5update2=$(md5sum updatescript1.sh | cut -d ' ' -f 1)
     md5update3=$(md5sum updatescript2.sh | cut -d ' ' -f 1)
-    md5update4=$(md5sum updatescript3.sh | cut -d ' ' -f 1)
-    md5update5=$(md5sum updatescript4.sh | cut -d ' ' -f 1)
     echo $md5update5
-    if []
+    if [ $md5update1 == $md5update2 ]
+    then
+      if [ $md5update2 == $md5update3 ]
+      then
+        echo 'Updater verified'
+       else
+       errorblank='The md5 hashes do not match'
+       functionpass=updatescript
+       error
+       fi
+    else
+      errorblank='The md5 hashes do not match'
+      functionpass=updatescript
+      error
+    fi
+}
+updatescript
 }
 
 
@@ -106,7 +125,7 @@ error() {
       if [ $servermd5error == 0 ] || [ $servermd5error == retry ]
       then
         echo 'Retrying the update'
-        md5update
+        $functionpass
       else
         echo 'Skipping update'
       fi

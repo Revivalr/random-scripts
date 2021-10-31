@@ -126,7 +126,7 @@ fi
 
 
 
-
+rm updatecheck.txt &>> updatecheck.txt
 md5local=$(md5sum main.sh | cut -d ' ' -f 1)
 md5localcheck=$(md5sum main.sh | cut -d ' ' -f 1)
 rm md5server.sh &>> updateremove.txt

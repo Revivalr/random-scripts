@@ -1,3 +1,4 @@
+rm updatescripterror.txt &>> updatecheck.txt
 echo
 echo 'Downloading updated script'
 echo
